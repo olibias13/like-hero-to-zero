@@ -12,6 +12,7 @@ import java.util.Map;
 
 import de.biasoliver.herotozero.model.Country;
 import de.biasoliver.herotozero.model.Emission;
+import de.biasoliver.herotozero.model.User;
 import jakarta.persistence.EntityManager;
 
 public class DataImporter {
@@ -69,6 +70,23 @@ public class DataImporter {
 				em.getTransaction().rollback();
 			}
 			throw e;
+		} finally {
+			em.close();
+		}
+	}
+	
+	public void createDemoUserIfMissing() {
+		EntityManager em = JpaUtil.getEntityManagerFactory().createEntityManager();
+		try {
+			Long anzahl = em.createQuery("select count(u) from User u", Long.class).getSingleResult();
+			if (anzahl == 0) {
+				em.getTransaction().begin();
+				User user = new User();
+				user.setUsername("forscher");
+				user.setPasswordHash(PasswordUtil.hash("demo1234"));
+				em.persist(user);
+				em.getTransaction().commit();
+			}
 		} finally {
 			em.close();
 		}

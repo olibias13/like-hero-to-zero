@@ -7,6 +7,7 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>de.biasoliver.herotozero.model.Country</class>
     <class>de.biasoliver.herotozero.model.Emission</class>
+    <class>de.biasoliver.herotozero.model.User</class>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/herotozero"/>

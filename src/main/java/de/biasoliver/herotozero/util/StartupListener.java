@@ -10,6 +10,7 @@ public class StartupListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		new DataImporter().importIfEmpty();
+		new DataImporter().createDemoUserIfMissing();
 	}
 
 	@Override
