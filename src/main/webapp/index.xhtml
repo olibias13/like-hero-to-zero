@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Like Hero To Zero</title>
 </h:head>
 <h:body>
 	<h1>Like Hero To Zero</h1>
-	<p:outputLabel value="Die Anwendung läuft." />
+	<p>Aktuellster CO2-Ausstoß eines Landes</p>
+	<h:form>
+		<p:selectOneMenu value="#{countryBean.selectedId}" filter="true" filterMatchMode="contains">
+			<p:ajax listener="#{countryBean.onCountryChange}" update="ergebnis" />
+			<f:selectItem itemLabel="Land wählen" noSelectionOption="true" />
+			<f:selectItems value="#{countryBean.countries}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+		</p:selectOneMenu>
+		<p:outputPanel id="ergebnis">
+			<h:outputText rendered="#{countryBean.result != null}"
+				value="Jahr #{countryBean.result.year}: #{countryBean.result.co2} Mio. Tonnen CO2" />
+			<h:outputText rendered="#{countryBean.selectedId != null and countryBean.result == null}"
+				value="Für dieses Land liegen keine Daten vor." />
+		</p:outputPanel>
+	</h:form>
 </h:body>
 </html>
