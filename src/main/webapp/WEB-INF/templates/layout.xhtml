@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html"
+	xmlns:ui="jakarta.faces.facelets">
+<h:head>
+	<title>Like Hero To Zero</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<header class="site-header">
+		<div class="container header-inner">
+			<h:link outcome="/index" styleClass="brand" value="Like Hero To Zero" />
+			<nav>
+				<h:link outcome="/index" value="Start" />
+				<h:link outcome="/login" value="Anmelden" rendered="#{empty sessionScope.user}" />
+				<h:link outcome="/admin/admin" value="Datenpflege" rendered="#{not empty sessionScope.user}" />
+			</nav>
+		</div>
+	</header>
+	<main class="container">
+		<ui:insert name="content" />
+	</main>
+	<footer class="site-footer">
+		Datenquelle: Our World in Data (Global Carbon Project) · IU-Fallstudie IPWA02-01
+	</footer>
+</h:body>
+</html>

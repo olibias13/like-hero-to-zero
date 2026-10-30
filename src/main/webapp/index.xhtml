@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="jakarta.faces.html"
 	xmlns:f="jakarta.faces.core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title>Like Hero To Zero</title>
-</h:head>
-<p><small>Datenquelle: Our World in Data (Global Carbon Project)</small></p>
-<h:body>
-	<h1>Like Hero To Zero</h1>
-	<p>Aktuellster CO2-Ausstoß eines Landes</p>
-	<p><h:link outcome="login" value="Anmelden (Wissenschaftler:innen)" /></p>
-	<h:form>
-		<p:selectOneMenu value="#{countryBean.selectedId}" filter="true" filterMatchMode="contains">
-			<p:ajax listener="#{countryBean.onCountryChange}" update="ergebnis" />
-			<f:selectItem itemLabel="Land wählen" noSelectionOption="true" />
-			<f:selectItems value="#{countryBean.countries}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
-		</p:selectOneMenu>
-		<p:outputPanel id="ergebnis">
-			<h:outputText rendered="#{countryBean.result != null}"
-				value="Jahr #{countryBean.result.year}: #{countryBean.result.co2} Mio. Tonnen CO2" />
-			<h:outputText rendered="#{countryBean.selectedId != null and countryBean.result == null}"
-				value="Für dieses Land liegen keine Daten vor." />
-		</p:outputPanel>
-	</h:form>
-</h:body>
-</html>
+	xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layout.xhtml">
+	<ui:define name="content">
+		<section class="hero">
+			<h1>Wie viel CO₂ stößt ein Land aus?</h1>
+			<p class="muted">Wähle ein Land und sieh den aktuellsten Wert aus dem Datensatz.</p>
+		</section>
+		<h:form styleClass="card">
+			<p:selectOneMenu value="#{countryBean.selectedId}" filter="true" filterMatchMode="contains"
+				style="width:100%">
+				<p:ajax listener="#{countryBean.onCountryChange}" update="ergebnis" />
+				<f:selectItem itemLabel="Land wählen" noSelectionOption="true" />
+				<f:selectItems value="#{countryBean.countries}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+			</p:selectOneMenu>
+			<p:outputPanel id="ergebnis" styleClass="result">
+				<h:panelGroup rendered="#{countryBean.result != null}">
+					<span class="result-value">
+						<h:outputText value="#{countryBean.result.co2}">
+							<f:convertNumber pattern="#,##0.0" locale="de" />
+						</h:outputText>
+					</span>
+					<span class="result-unit">Mio. Tonnen CO₂ im Jahr #{countryBean.result.year}</span>
+				</h:panelGroup>
+				<h:outputText styleClass="muted"
+					rendered="#{countryBean.selectedId != null and countryBean.result == null}"
+					value="Für dieses Land liegen keine Daten vor." />
+			</p:outputPanel>
+		</h:form>
+	</ui:define>
+</ui:composition>

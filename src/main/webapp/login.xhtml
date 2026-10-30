@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="jakarta.faces.html"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<title>Anmelden</title>
-</h:head>
-<h:body>
-	<h1>Anmeldung für Wissenschaftler:innen</h1>
-	<h:form>
-		<p:messages />
-		<h:panelGrid columns="2" cellpadding="5">
-			<p:outputLabel for="user" value="Benutzername" />
-			<p:inputText id="user" value="#{loginBean.username}" required="true" />
-			<p:outputLabel for="pw" value="Passwort" />
-			<p:password id="pw" value="#{loginBean.password}" required="true" feedback="false" />
-		</h:panelGrid>
-		<p:commandButton value="Anmelden" action="#{loginBean.login}" ajax="false" />
-	</h:form>
-	<p><h:link outcome="index" value="Zurück zur Startseite" /></p>
-</h:body>
-</html>
+	xmlns:ui="jakarta.faces.facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/layout.xhtml">
+	<ui:define name="content">
+		<div class="card narrow">
+			<h1>Anmelden</h1>
+			<p class="muted">Bereich für Wissenschaftler:innen</p>
+			<h:form>
+				<p:messages />
+				<div class="field">
+					<label for="user">Benutzername</label>
+					<p:inputText id="user" value="#{loginBean.username}" required="true" styleClass="w-full" />
+				</div>
+				<div class="field">
+					<label for="pw">Passwort</label>
+					<p:password id="pw" value="#{loginBean.password}" required="true" feedback="false"
+						styleClass="w-full" style="width:100%" />
+				</div>
+				<p:commandButton value="Anmelden" action="#{loginBean.login}" ajax="false" />
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
