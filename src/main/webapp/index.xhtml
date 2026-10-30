@@ -9,6 +9,7 @@
 <h:body>
 	<h1>Like Hero To Zero</h1>
 	<p>Aktuellster CO2-Ausstoß eines Landes</p>
+	<p><h:link outcome="login" value="Anmelden (Wissenschaftler:innen)" /></p>
 	<h:form>
 		<p:selectOneMenu value="#{countryBean.selectedId}" filter="true" filterMatchMode="contains">
 			<p:ajax listener="#{countryBean.onCountryChange}" update="ergebnis" />

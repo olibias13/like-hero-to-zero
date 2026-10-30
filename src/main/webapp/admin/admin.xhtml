@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Datenpflege</title>
+</h:head>
+<h:body>
+	<h1>Datenpflege</h1>
+	<p>Angemeldet als #{sessionScope.user}</p>
+	<h:form id="form">
+		<p:messages id="msgs" closable="true" />
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel for="land" value="Land" />
+			<p:selectOneMenu id="land" value="#{adminBean.countryId}" filter="true" filterMatchMode="contains">
+				<p:ajax listener="#{adminBean.onCountryChange}" update="tabelle" />
+				<f:selectItem itemLabel="Land wählen" noSelectionOption="true" />
+				<f:selectItems value="#{adminBean.countries}" var="c" itemLabel="#{c.name}" itemValue="#{c.id}" />
+			</p:selectOneMenu>
+			<p:outputLabel for="jahr" value="Jahr" />
+			<p:inputNumber id="jahr" value="#{adminBean.year}" decimalPlaces="0" thousandSeparator=""
+				minValue="1750" maxValue="2100" />
+			<p:outputLabel for="co2" value="CO2 (Mio. Tonnen)" />
+			<p:inputNumber id="co2" value="#{adminBean.co2}" decimalPlaces="3" decimalSeparator="."
+				thousandSeparator="" minValue="0" />
+		</h:panelGrid>
+		<p:commandButton value="Speichern" action="#{adminBean.save}" update="form" />
+		<p:commandButton value="Abmelden" action="#{loginBean.logout}" ajax="false" />
+
+		<p:dataTable id="tabelle" var="e" value="#{adminBean.emissions}" rows="10" paginator="true"
+			emptyMessage="Land wählen, um die Werte zu sehen">
+			<p:column headerText="Jahr"><h:outputText value="#{e.year}" /></p:column>
+			<p:column headerText="CO2 (Mio. Tonnen)"><h:outputText value="#{e.co2}" /></p:column>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>

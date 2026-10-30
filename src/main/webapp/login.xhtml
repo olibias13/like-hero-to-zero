@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Anmelden</title>
+</h:head>
+<h:body>
+	<h1>Anmeldung für Wissenschaftler:innen</h1>
+	<h:form>
+		<p:messages />
+		<h:panelGrid columns="2" cellpadding="5">
+			<p:outputLabel for="user" value="Benutzername" />
+			<p:inputText id="user" value="#{loginBean.username}" required="true" />
+			<p:outputLabel for="pw" value="Passwort" />
+			<p:password id="pw" value="#{loginBean.password}" required="true" feedback="false" />
+		</h:panelGrid>
+		<p:commandButton value="Anmelden" action="#{loginBean.login}" ajax="false" />
+	</h:form>
+	<p><h:link outcome="index" value="Zurück zur Startseite" /></p>
+</h:body>
+</html>
